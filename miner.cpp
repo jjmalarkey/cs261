@@ -11,6 +11,10 @@ void baseMiner::start() {
 	cout << "Miner #" << id << " (" << designation << ") is starting" << endl;
 }
 
+void baseMiner::detect() {}
+
+void baseMiner::collect() {}
+
 void baseMiner::stop() {
 	cout << "Miner #" << id << " (" << designation << ") is going to standby" << endl;
 }
@@ -27,6 +31,10 @@ baseMiner::baseMiner(std::string resource) : designation(resource) {
 	id = ++botCount;
 }
 
+baseMiner::baseMiner() {
+	cout << "baseMiner basic constructor called" << endl;
+}
+
 baseMiner::~baseMiner() {
 	botCount--;
 }
@@ -38,17 +46,31 @@ void fluidMiner::collect() {
 		endl << "Liquid water moved to collection chamber." << endl << "Surface pump activated." << endl;
 }
 
+//void fluidMiner::detect() {}
+
 fluidMiner::fluidMiner(string resource) : baseMiner(resource) {}
 
-fluidMiner::~fluidMiner() {}
+fluidMiner::fluidMiner() {
+	cout << "fluidMiner basic constructor called" << endl;
+}
+
+//fluidMiner::~fluidMiner() {}
 
 //waterMiner code
+///*
 
 void waterMiner::detect() {
 	cout << "Initiating heat blast." << endl << "Directional humidity detector activated."  << 
 		endl << "Ice located." << endl;
 }
 
-waterMiner::waterMiner() : fluidMiner("water") {}
+waterMiner::waterMiner() : fluidMiner("water") {
+//	designation = "water";
+}
 
-waterMiner::~waterMiner() {}
+//waterMiner::waterMiner() : fluidMiner{"water"} {
+//	designation = "water";
+//}
+
+//waterMiner::~waterMiner() {}
+///
