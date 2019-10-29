@@ -7,16 +7,22 @@ using namespace std;
 
 unsigned int baseMiner::botCount = 0;
 
-void baseMiner::start() {
-	cout << "Miner #" << id << " (" << designation << ") is starting" << endl;
+string baseMiner::start() {
+	string returnval = "Miner #" + to_string(id) + " (" + designation + ") is starting\n";
+	return returnval;
 }
 
-void baseMiner::detect() {}
+string baseMiner::detect() {
+	return "";
+}
 
-void baseMiner::collect() {}
+string baseMiner::collect() {
+	return "";
+}
 
-void baseMiner::stop() {
-	cout << "Miner #" << id << " (" << designation << ") is going to standby" << endl;
+string baseMiner::stop() {
+	string returnval = "Miner #" + to_string(id) + " (" + designation + ") is going to standby\n";
+	return returnval;
 }
 
 unsigned int baseMiner::getID() {
@@ -31,9 +37,7 @@ baseMiner::baseMiner(std::string resource) : designation(resource) {
 	id = ++botCount;
 }
 
-baseMiner::baseMiner() {
-	cout << "baseMiner basic constructor called" << endl;
-}
+baseMiner::baseMiner() {}
 
 baseMiner::~baseMiner() {
 	botCount--;
@@ -41,36 +45,72 @@ baseMiner::~baseMiner() {
 
 //fluidMiner code
 
-void fluidMiner::collect() {
-	cout << "Water vacuums and hoses deployed." << endl << "Heater turned on. Waiting for the ice to melt." << 
-		endl << "Liquid water moved to collection chamber." << endl << "Surface pump activated." << endl;
+string fluidMiner::collect() {
+	return "Water vacuums and hoses deployed.\nHeater turned on. Waiting for the ice to melt.\nLiquid water moved to collection chamber.\nSurface pump activated.\n";
 }
-
-//void fluidMiner::detect() {}
 
 fluidMiner::fluidMiner(string resource) : baseMiner(resource) {}
 
-fluidMiner::fluidMiner() {
-	cout << "fluidMiner basic constructor called" << endl;
+//solidMiner code
+
+solidMiner::solidMiner(string resource) : baseMiner(resource) {}
+
+string solidMiner::collect() {
+	return "Impact hammer positioned.\nImpact hammer activated for 15 seconds.\nDebris scoop activated.\nDebris elevator activated.\nDebris collection complete.\n";
 }
 
-//fluidMiner::~fluidMiner() {}
+//iceMiner code
 
-//waterMiner code
-///*
-
-void waterMiner::detect() {
-	cout << "Initiating heat blast." << endl << "Directional humidity detector activated."  << 
-		endl << "Ice located." << endl;
+string iceMiner::detect() {
+	return "Initiating heat blast.\nDirectional humidity detector activated.\nIce located.\n";
 }
 
-waterMiner::waterMiner() : fluidMiner("water") {
-//	designation = "water";
+iceMiner::iceMiner(string resource) : fluidMiner(resource) {}
+
+//thermalMiner code
+
+string thermalMiner::detect() {
+	return "Releasing oxygen...\nThermal detector activated.\nFlammable reaction detected.\n";
 }
 
-//waterMiner::waterMiner() : fluidMiner{"water"} {
-//	designation = "water";
-//}
+thermalMiner::thermalMiner(string resource) : solidMiner(resource) {}
 
-//waterMiner::~waterMiner() {}
-///
+//grinderMiner code
+
+string grinderMiner::detect() {
+	return "Sample grinder activated.\n10 um seive applied.\nInfrared laser activated.\nSpectrophotometer activated and results analyzed.\nSilca vein located.\n";
+}
+
+grinderMiner::grinderMiner(string resource) : solidMiner(resource) {}
+
+//magnetometerMiner code
+
+string magnetometerMiner::detect() {
+	return "Magnetometer activated.\nSearching for magnetic field deviations.\nIron deposits located.\n";
+}
+
+magnetometerMiner::magnetometerMiner(string resource) : solidMiner(resource) {}
+
+//steamMiner code
+
+string steamMiner::detect() {
+	return "Steam blasting...\nSalinity detector activated.\nConcentration vector of NaCl detected.\n";
+}
+
+steamMiner::steamMiner(string resource) : solidMiner(resource) {}
+
+//	from here is mostly constructors that supply the right resource identity
+
+waterMiner::waterMiner() : iceMiner("water") {}
+
+sodiumMiner::sodiumMiner() : steamMiner("sodium") {}
+
+chlorideMiner::chlorideMiner() : steamMiner("chloride") {}
+
+ironMiner::ironMiner() : magnetometerMiner("iron") {}
+
+siliconMiner::siliconMiner() : grinderMiner("silicon") {}
+
+magnesiumMiner::magnesiumMiner() : thermalMiner("magnesium") {}
+
+potassiumMiner::potassiumMiner() : thermalMiner("potassium") {}
